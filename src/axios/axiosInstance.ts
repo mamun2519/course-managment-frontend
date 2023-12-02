@@ -4,8 +4,9 @@
 
 import axios from "axios";
 import { authKey } from "../constants/storageKey";
-import { IGenericErrorResponse } from "../types";
+
 import { getFromLocalStorage } from "../utils/local-storage";
+import { IGenericErrorResponse } from "../types";
 
 const instance = axios.create();
 instance.defaults.headers.post["Content-Type"] = "application/json";
