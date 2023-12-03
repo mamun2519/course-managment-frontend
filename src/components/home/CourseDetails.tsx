@@ -3,6 +3,7 @@ import { ICourse } from "../../interface/course";
 import { Typography } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { Link } from "react-router-dom";
 const CourseDetails = ({ course }: { course: ICourse }) => {
   return (
     <div className="w-96 h-full border rounded-2xl shadow">
@@ -45,9 +46,12 @@ const CourseDetails = ({ course }: { course: ICourse }) => {
           <div className="h-12 w-20 border text-blue-600 flex  justify-center items-center rounded">
             <ThumbUpIcon />
           </div>
-          <div className="h-12 w-20 border text-red-600 flex  justify-center items-center rounded">
+          <Link
+            to={`/course/${course?._id}`}
+            className="h-12 w-20 border text-red-600 flex  justify-center items-center rounded"
+          >
             <RemoveRedEyeIcon />
-          </div>
+          </Link>
         </div>
         <div className="w-full h-12 bg-red-500 text-white rounded flex justify-center items-center">
           <button>Enrolled Now</button>
