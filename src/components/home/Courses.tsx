@@ -9,6 +9,8 @@ import { useAllCourseQuery } from "../../redux/api/courseApi";
 import CourseDetails from "./CourseDetails";
 import { ICourse } from "../../interface/course";
 import PaginationLink from "../ui/Pagination";
+import { TextField } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 const Courses = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageLimit, setLimit] = useState(10);
@@ -27,7 +29,7 @@ const Courses = () => {
   }
 
   const { data, isLoading } = useAllCourseQuery(query);
-  console.log(data);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -36,7 +38,29 @@ const Courses = () => {
     <div className="my-20 max-w-7xl mx-auto lg:px-0 px-4">
       <h3 className="text-center text-3xl ">Our Courses</h3>
 
-      <div className=" flex justify-end">
+      <div className=" flex  justify-between mt-20">
+        <div className=" flex gap-2">
+          <TextField
+            id="outlined-basic"
+            label="Search"
+            variant="outlined"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder=" Course name or Instructor "
+            size="small"
+          />
+          {searchTerm && (
+            <div
+              onClick={() => {
+                setSearchTerm("");
+                setLimit(10);
+              }}
+              className="h-full w-16 flex justify-center items-center border text-red-500 rounded-2xl shadow  cursor-pointer"
+            >
+              <RefreshIcon />
+            </div>
+          )}
+        </div>
         <FormControl sx={{ minWidth: 120 }} size="small">
           <InputLabel id="demo-select-small-label" className="px-4">
             Limit
@@ -58,7 +82,7 @@ const Courses = () => {
         </FormControl>
       </div>
       <div className="">
-        <div className=" grid lg:grid-cols-3 grid-cols-1 gap-5  mt-10">
+        <div className=" grid lg:grid-cols-3 grid-cols-1 gap-5  mt-4">
           {data?.data?.map((course: ICourse) => (
             <CourseDetails key={course?._id} course={course} />
           ))}

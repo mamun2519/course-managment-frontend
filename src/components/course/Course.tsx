@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useParams } from "react-router-dom";
 import { useCourseDetailsQuery } from "../../redux/api/courseApi";
 import { ICourse } from "../../interface/course";
@@ -13,13 +14,14 @@ const Course = () => {
   const user: { email: string | null; userId: string | null } = useAppSelector(
     (state) => state.user.user
   );
+  //@ts-ignore
   const params: { id: string } = useParams();
   const { data, isLoading } = useCourseDetailsQuery(params.id);
 
   const course: ICourse = data;
   const enrolledCourseHandler = async (id: string) => {
     const data = { userId: user.userId, course: id };
-    if (user?.email) {
+    if (user?.userId) {
       try {
         const res = await enrolledCourse(data).unwrap();
         if (res) {
@@ -27,6 +29,7 @@ const Course = () => {
         } else {
           toast.error("Something is wrong");
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.log(error);
         toast.error(error?.data);

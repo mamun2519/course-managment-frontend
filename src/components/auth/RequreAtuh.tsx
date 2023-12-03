@@ -11,7 +11,7 @@ const RequireAuth = ({ children }: { children: React.ReactNode }) => {
   //     return <Loading></Loading>;
   //   }
 
-  if (!user.email) {
+  if (!user.userId) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

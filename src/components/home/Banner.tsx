@@ -20,17 +20,17 @@ const Banner = () => {
             <div className="mt-5">
               {" "}
               <button
-                onClick={() => navigate("/my-team")}
+                onClick={() => navigate("/dashboard")}
                 className="px-8 py-2 bg-red-500 text-white rounded-xl"
               >
-                Go Team
+                Dashboard
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div className="">
-        <img src={BannerPic} className="" alt="" />
+      <div className="  flex justify-center">
+        <img src={BannerPic} className="h-96" alt="" />
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const CourseDetails = ({ course }: { course: ICourse }) => {
 
   const enrolledCourseHandler = async (id: string) => {
     const data = { userId: user.userId, course: id };
-    if (user?.email) {
+    if (user?.userId) {
       try {
         const res = await enrolledCourse(data).unwrap();
         if (res) {
@@ -25,6 +25,7 @@ const CourseDetails = ({ course }: { course: ICourse }) => {
         } else {
           toast.error("Something is wrong");
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.log(error);
         toast.error(error?.data);
@@ -34,7 +35,7 @@ const CourseDetails = ({ course }: { course: ICourse }) => {
     }
   };
   const likeHandler = async (id: string) => {
-    if (user.email) {
+    if (user.userId) {
       try {
         const res = await likedCourse(id).unwrap();
         if (res) {
@@ -51,7 +52,7 @@ const CourseDetails = ({ course }: { course: ICourse }) => {
     }
   };
   return (
-    <div className="w-96 h-full border rounded-2xl shadow">
+    <div className="w-full h-full border rounded-2xl shadow">
       <div className="  h-44  p-3 rounded-xl">
         <img
           src={course.thumbnail}
