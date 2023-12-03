@@ -19,7 +19,7 @@ import PaginationLink from "../ui/Pagination";
 const Courses = () => {
   const [selectedValue, setSelectedValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageLimit, setLimit] = useState(20);
+  const [pageLimit, setLimit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectGender, setSelectGender] = useState("");
   const [selectAvailable, setAvailable] = useState<string | boolean | null>(

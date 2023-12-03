@@ -4,7 +4,33 @@ import { Typography } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Link } from "react-router-dom";
+import { useLikedCourseMutation } from "../../redux/api/courseApi";
+import { toast } from "react-toastify";
+import { useAppSelector } from "../../redux/hooks";
 const CourseDetails = ({ course }: { course: ICourse }) => {
+  const user: { email: string | null; userId: string | null } = useAppSelector(
+    (state) => state.user.user
+  );
+  console.log(course.likes);
+  console.log(user.userId);
+  const [likedCourse] = useLikedCourseMutation();
+  const likeHandler = async (id: string) => {
+    if (user) {
+      try {
+        const res = await likedCourse(id).unwrap();
+        if (res) {
+          toast.success("Liked");
+        } else {
+          toast.success("Unliked");
+        }
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      toast.error("Please Login First");
+    }
+  };
   return (
     <div className="w-96 h-full border rounded-2xl shadow">
       <div className="  h-44  p-3 rounded-xl">
@@ -14,7 +40,7 @@ const CourseDetails = ({ course }: { course: ICourse }) => {
           alt=""
         />
       </div>
-      <div className="p-3 mt-3">
+      <div className="p-3 mt-3 h-44">
         <h3 className="text-xl">{course.name}</h3>
         <div className="mt-1 flex ">
           <div className=" w-40">
@@ -43,7 +69,17 @@ const CourseDetails = ({ course }: { course: ICourse }) => {
       </div>
       <div className="p-3 mt-1 grid grid-cols-2">
         <div className=" flex gap-3">
-          <div className="h-12 w-20 border text-blue-600 flex  justify-center items-center rounded">
+          <div
+            onClick={() => likeHandler(course?._id)}
+            className={`${
+              course?.likes?.some((LikeUser) => LikeUser.user == user.userId)
+                ? "text-red-600"
+                : "text-blue-600"
+            } h-12 w-20 cursor-pointer border  flex  justify-center items-center rounded`}
+          >
+            <div className=" flex  items-center mt-2 ">
+              <Typography className="px-2">{course.like} </Typography>
+            </div>{" "}
             <ThumbUpIcon />
           </div>
           <Link

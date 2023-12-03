@@ -30,7 +30,7 @@ export const courseApi = baseApi.injectEndpoints({
     likedCourse: build.mutation({
       query: (id) => ({
         url: `/course/like/${id}`,
-        method: "PATCH",
+        method: "POST",
       }),
       invalidatesTags: ["course"],
     }),

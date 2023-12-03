@@ -27,10 +27,11 @@ const Login = () => {
     data
   ) => {
     // Handle form submission logic here
-    console.log(data);
+
     try {
       const res = await userLogin(data).unwrap();
       console.log(res);
+      console.log(res.user);
       if (res?.accessToken) {
         navigate("/");
         // TODO USE TOST HERE
