@@ -8,7 +8,7 @@ export const enrolledCourseApi = baseApi.injectEndpoints({
         url: "/enrolled-course",
         method: "POST",
       }),
-      invalidatesTags: ["course"],
+      invalidatesTags: ["enrollCourse"],
     }),
     myEnrolledCourse: build.query({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,7 +17,7 @@ export const enrolledCourseApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      providesTags: ["course"],
+      providesTags: ["enrollCourse"],
     }),
 
     enrolledCourseDetails: build.query({
@@ -25,7 +25,7 @@ export const enrolledCourseApi = baseApi.injectEndpoints({
         url: `/enrolled-course/${id}`,
         method: "GET",
       }),
-      providesTags: ["user"],
+      providesTags: ["enrollCourse"],
     }),
     updatedCourse: build.mutation({
       query: (data) => ({
@@ -33,14 +33,14 @@ export const enrolledCourseApi = baseApi.injectEndpoints({
         method: "PATCH",
         data,
       }),
-      invalidatesTags: ["course"],
+      invalidatesTags: ["enrollCourse"],
     }),
     deleteEnrolledCourse: build.mutation({
       query: (id) => ({
         url: `/enrolled-course/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["course"],
+      invalidatesTags: ["enrollCourse"],
     }),
   }),
 });
