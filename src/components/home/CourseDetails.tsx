@@ -25,8 +25,9 @@ const CourseDetails = ({ course }: { course: ICourse }) => {
         } else {
           toast.error("Something is wrong");
         }
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
+        toast.error(error?.data);
       }
     } else {
       toast.error("Please Login First");

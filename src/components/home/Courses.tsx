@@ -10,14 +10,10 @@ import CourseDetails from "./CourseDetails";
 import { ICourse } from "../../interface/course";
 import PaginationLink from "../ui/Pagination";
 const Courses = () => {
-  const [selectedValue, setSelectedValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageLimit, setLimit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectGender, setSelectGender] = useState("");
-  const [selectAvailable, setAvailable] = useState<string | boolean | null>(
-    null
-  );
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const query: Record<string, any> = {};
   const handlePageChange = (_event: string, page: number) => {
@@ -29,27 +25,6 @@ const Courses = () => {
   if (searchTerm) {
     query["searchTerm"] = searchTerm;
   }
-  if (selectedValue) {
-    query["domain"] = selectedValue;
-  }
-  if (selectGender) {
-    query["gender"] = selectGender;
-  }
-  if (selectAvailable == true || selectAvailable == false) {
-    query["available"] = selectAvailable;
-  }
-
-  const handleCheckboxChange = (value: React.SetStateAction<string>) => {
-    setSelectedValue(value === selectedValue ? "" : value);
-  };
-  const handleGenderCheckboxChange = (value: React.SetStateAction<string>) => {
-    setSelectGender(value === selectGender ? "" : value);
-  };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleAvailableCheckboxChange = (value: React.SetStateAction<any>) => {
-    console.log(value);
-    setAvailable(value === selectAvailable ? null : value);
-  };
 
   const { data, isLoading } = useAllCourseQuery(query);
   console.log(data);

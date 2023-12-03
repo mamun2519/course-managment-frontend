@@ -1,16 +1,40 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useCourseDetailsQuery } from "../../redux/api/courseApi";
 import { ICourse } from "../../interface/course";
 import { Typography } from "@mui/material";
 import Loading from "../shared/Loading";
 import { ISyllabus } from "../../interface/syllabus";
+import { useAppSelector } from "../../redux/hooks";
+import { toast } from "react-toastify";
+import { useEnrolledCourseMutation } from "../../redux/api/enrollCourseApi";
 
 const Course = () => {
+  const [enrolledCourse] = useEnrolledCourseMutation();
+  const user: { email: string | null; userId: string | null } = useAppSelector(
+    (state) => state.user.user
+  );
   const params: { id: string } = useParams();
   const { data, isLoading } = useCourseDetailsQuery(params.id);
-  console.log(data);
+
   const course: ICourse = data;
+  const enrolledCourseHandler = async (id: string) => {
+    const data = { userId: user.userId, course: id };
+    if (user?.email) {
+      try {
+        const res = await enrolledCourse(data).unwrap();
+        if (res) {
+          toast.success("Course Enrolled Successfully");
+        } else {
+          toast.error("Something is wrong");
+        }
+      } catch (error: any) {
+        console.log(error);
+        toast.error(error?.data);
+      }
+    } else {
+      toast.error("Please Login First");
+    }
+  };
   if (isLoading) {
     return <Loading />;
   }
@@ -101,7 +125,10 @@ const Course = () => {
         </div>
 
         <div className="py-4">
-          <button className="w-full h-12 bg-red-500 text-white rounded flex justify-center items-center">
+          <button
+            onClick={() => enrolledCourseHandler(course?._id)}
+            className="w-full h-12 bg-red-500 text-white rounded flex justify-center items-center"
+          >
             Enrolled Now
           </button>
         </div>
