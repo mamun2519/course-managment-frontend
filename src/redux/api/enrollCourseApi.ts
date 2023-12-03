@@ -4,9 +4,10 @@ export const enrolledCourseApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     enrolledCourse: build.mutation({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      query: () => ({
+      query: (data) => ({
         url: "/enrolled-course",
         method: "POST",
+        data,
       }),
       invalidatesTags: ["enrollCourse"],
     }),

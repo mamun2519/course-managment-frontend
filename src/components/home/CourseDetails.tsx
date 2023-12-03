@@ -7,21 +7,40 @@ import { Link } from "react-router-dom";
 import { useLikedCourseMutation } from "../../redux/api/courseApi";
 import { toast } from "react-toastify";
 import { useAppSelector } from "../../redux/hooks";
+import { useEnrolledCourseMutation } from "../../redux/api/enrollCourseApi";
 const CourseDetails = ({ course }: { course: ICourse }) => {
   const user: { email: string | null; userId: string | null } = useAppSelector(
     (state) => state.user.user
   );
-  console.log(course.likes);
-  console.log(user.userId);
+
   const [likedCourse] = useLikedCourseMutation();
+  const [enrolledCourse] = useEnrolledCourseMutation();
+
+  const enrolledCourseHandler = async (id: string) => {
+    const data = { userId: user.userId, course: id };
+    if (user?.email) {
+      try {
+        const res = await enrolledCourse(data).unwrap();
+        if (res) {
+          toast.success("Course Enrolled Successfully");
+        } else {
+          toast.error("Something is wrong");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      toast.error("Please Login First");
+    }
+  };
   const likeHandler = async (id: string) => {
-    if (user) {
+    if (user.email) {
       try {
         const res = await likedCourse(id).unwrap();
         if (res) {
           toast.success("Liked");
         } else {
-          toast.success("Unliked");
+          toast.success("Un-liked");
         }
         console.log(res);
       } catch (error) {
@@ -89,7 +108,10 @@ const CourseDetails = ({ course }: { course: ICourse }) => {
             <RemoveRedEyeIcon />
           </Link>
         </div>
-        <div className="w-full h-12 bg-red-500 text-white rounded flex justify-center items-center">
+        <div
+          onClick={() => enrolledCourseHandler(course?._id)}
+          className="w-full h-12 cursor-pointer bg-red-500 text-white rounded flex justify-center items-center"
+        >
           <button>Enrolled Now</button>
         </div>
       </div>
