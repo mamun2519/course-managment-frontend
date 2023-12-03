@@ -1,4 +1,3 @@
-import React from "react";
 import { ICourse } from "../../interface/course";
 import { Typography } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";

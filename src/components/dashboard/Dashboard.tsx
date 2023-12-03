@@ -28,11 +28,10 @@ const Dashboard = () => {
                 />
               </div>
               <div className="p-5 w-96">
-                <Typography style={{ fontSize: "18px" }}>
-                  {enrolledCourse.course.name}
-                </Typography>
-                <div>
-                  {" "}
+                <div className="h-24">
+                  <Typography style={{ fontSize: "18px" }}>
+                    {enrolledCourse.course.name}
+                  </Typography>{" "}
                   <Typography>{enrolledCourse.course.instructor}</Typography>
                   <Typography>
                     {enrolledCourse.course.duration} Duration
@@ -40,11 +39,11 @@ const Dashboard = () => {
                 </div>
                 <div className="mt-3 w-full flex justify-center items-center gap-4">
                   <CourseProgress value={100} />
-                  <div className="m">
+                  <div className="">
                     <Typography>100 %</Typography>
                   </div>
                 </div>
-                <div className="w-full h-12 cursor-pointer bg-red-500 text-white rounded flex justify-center items-center mt-2">
+                <div className="w-full h-10 cursor-pointer bg-red-500 text-white rounded flex justify-center items-center mt-2">
                   <button>Complete Course</button>
                 </div>
               </div>
